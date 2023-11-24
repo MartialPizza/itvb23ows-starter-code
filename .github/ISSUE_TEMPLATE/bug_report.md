@@ -1,6 +1,4 @@
----
-name: Bug report
----
+Bugs
 
 1. De dropdown die aangeeft welke stenen een speler kan plaatsen bevat ook stenen die
 de speler niet meer heeft. Bovendien bevat de dropdown die aangeeft waar een speler
