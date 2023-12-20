@@ -1,0 +1,29 @@
+version: '3.8'
+
+volumes:
+  datafiles:
+
+services:
+  website:
+    container_name: phpTheHive
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_DBPORT=3306
+    ports:
+      - 8080:3000
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0.0
+    container_name: mysql8
+    environment:
+      MYSQL_TCP_PORT: 3306
+    volumes:
+      - datafiles:/var/lib/mysql
+    restart: always
+    ports:
+      - 3307:3306
