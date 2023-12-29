@@ -5,16 +5,13 @@ $GLOBALS['OFFSETS'] = [[0, 1], [0, -1], [1, 0], [-1, 0], [-1, 1], [1, -1]];
 function isNeighbour($a, $b) {
     $a = explode(',', $a);
     $b = explode(',', $b);
-    if ($a[0] == $b[0] && abs($a[1] - $b[1]) == 1) {
+    if (($a[0] == $b[0] && abs($a[1] - $b[1]) == 1) or
+        ($a[1] == $b[1] && abs($a[0] - $b[0]) == 1) or
+        ($a[0] + $a[1] == $b[0] + $b[1])) {
         return true;
+    } else {
+        return false;
     }
-    if ($a[1] == $b[1] && abs($a[0] - $b[0]) == 1) {
-        return true;
-    }
-    if ($a[0] + $a[1] == $b[0] + $b[1]) {
-        return true;
-    }
-    return false;
 }
 
 function hasNeighBour($a, $board) {
@@ -43,10 +40,7 @@ function len($tile) {
 }
 
 function slide($board, $from, $to) {
-    if (!hasNeighBour($to, $board)) {
-        return false;
-    }
-    if (!isNeighbour($from, $to)) {
+    if ((!hasNeighBour($to, $board)) or (!isNeighbour($from, $to))) {
         return false;
     }
     $b = explode(',', $to);

@@ -26,8 +26,8 @@ if (!$hand[$piece]) {
     $_SESSION['hand'][$player][$piece]--;
     $_SESSION['player'] = 1 - $_SESSION['player'];
     $db = include_once 'database.php';
-    $stmt = $db->prepare('insert into moves (game_id, type, move_from, move_to, previous_id, state) 
-                            values (?, "play", ?, ?, ?, ?)');
+    $query = 'insert into moves (game_id, type, move_from, move_to, previous_id, state) values (?, "play", ?, ?, ?, ?)';
+    $stmt = $db->prepare($query);
     $stmt->bind_param('issis', $_SESSION['game_id'], $piece, $to, $_SESSION['last_move'], getState());
     $stmt->execute();
     $_SESSION['last_move'] = $db->insert_id;
