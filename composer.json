@@ -2,5 +2,11 @@
     "require": {
         "vlucas/phpdotenv": "^5.6",
       "ext-mysqli": "*"
+    },
+
+    "autoload": {
+      "files": [
+        "php/src/database.php"
+      ]
     }
 }
