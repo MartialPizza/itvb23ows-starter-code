@@ -2,7 +2,6 @@
     session_start();
 
     include_once 'util.php';
-    include_once 'index.css';
 
     if (!isset($_SESSION['board'])) {
         header('Location: restart.php');
@@ -28,6 +27,7 @@
 <html lang="en">
     <head>
         <title>Hive</title>
+        <link rel="stylesheet" href="index.css">
     </head>
     <body>
         <div class="board">
@@ -134,7 +134,6 @@
             echo $_SESSION['error'];
         }
             unset($_SESSION['error']); ?></strong>
-        }
         <ol>
             <?php
                 $db = include_once 'database.php';
