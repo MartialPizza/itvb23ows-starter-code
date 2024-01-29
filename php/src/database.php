@@ -1,8 +1,8 @@
 <?php
     use Dotenv\Dotenv;
-    require "../vendor/autoload.php";
+    require "../../vendor/autoload.php";
 
-    $dotenv = Dotenv::createImmutable(__DIR__ . '/itvb23ows-starter-code/');
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
     $dotenv->load();
 
     if (!function_exists('getState')) {
