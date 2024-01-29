@@ -50,7 +50,7 @@
                 $common[] = $p.",".$q;
             }
         }
-        if (!$board[$common[0]] && !$board[$common[1]] && !$board[$from] && !$board[$to]) {
+        if (empty($board[$common[0]]) && empty($board[$common[1]]) && empty($board[$from]) && empty($board[$to])) {
             return false;
         }
         return min(len($board[$common[0]]), len($board[$common[1]])) <= max(len($board[$from]), len($board[$to]));

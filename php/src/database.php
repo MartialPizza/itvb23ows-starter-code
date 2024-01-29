@@ -1,8 +1,8 @@
 <?php
     use Dotenv\Dotenv;
-    require "../../vendor/autoload.php";
+    require "../vendor/autoload.php";
 
-    $dotenv = Dotenv::createImmutable(__DIR__.'/../../');
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/itvb23ows-starter-code/');
     $dotenv->load();
 
     if (!function_exists('getState')) {
@@ -22,6 +22,10 @@
         }
     }
 
-    return new mysqli($_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
-
+    if (!function_exists('database')) {
+        function database()
+        {
+            return new mysqli($_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
+        }
+    }
 

@@ -94,7 +94,9 @@
             <select name="piece">
                 <?php
                     foreach ($hand[$player] as $tile => $ct) {
-                        echo "<option value=\"$tile\">$tile</option>";
+                        if ($ct > 0) {
+                            echo "<option value=\"$tile\">$tile</option>";
+                        }
                     }
                 ?>
             </select>
@@ -136,7 +138,8 @@
             unset($_SESSION['error']); ?></strong>
         <ol>
             <?php
-                $db = include_once 'database.php';
+                include_once 'database.php';
+                $db = database();
                 $stmt = $db->prepare('SELECT * FROM moves WHERE game_id = '.$_SESSION['game_id']);
                 $stmt->execute();
                 $result = $stmt->get_result();
