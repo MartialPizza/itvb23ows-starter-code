@@ -1,6 +1,11 @@
 <?php
     use Dotenv\Dotenv;
+
+    // Use this to play the game
     require "../../vendor/autoload.php";
+
+    // Use this to test code in the terminal/command line
+//    require "vendor/autoload.php";
 
     $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
     $dotenv->load();

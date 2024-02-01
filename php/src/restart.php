@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     function restart() {
         $_SESSION['board'] = [];
@@ -13,6 +15,7 @@
         $_SESSION['game_id'] = $db->insert_id;
     }
 
-    restart();
-    header('Location: index.php');
-
+    if (!debug_backtrace()) {
+        restart();
+        header('Location: index.php');
+    }

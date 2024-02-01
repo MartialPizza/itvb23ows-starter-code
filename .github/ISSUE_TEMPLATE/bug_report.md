@@ -10,7 +10,7 @@ stenen van de tegenstander bevatten.
 moeten zijn dat wit zijn koningin verplaatst naar (0, 1), maar dat wordt niet toegestaan.
 
 3. Als wit drie stenen plaatst die geen bijenkoningin zijn, mag hij als vierde zet helemaal
-geen steen spelen. Het spel loopt dan dus vast.
+geen steen spelen. Het spel loopt dan dus vast. 
 
 4. Als je een steen verplaatst, kan je daarna geen nieuwe steen spelen op het oude veld,
 ook als dat volgens de regels wel zou mogen.

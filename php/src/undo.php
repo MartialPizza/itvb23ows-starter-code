@@ -1,17 +1,25 @@
 <?php
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     include_once 'database.php';
 
     function undo() {
-        $db = database();
-        $stmt = $db->prepare('SELECT * FROM moves WHERE id = '.$_SESSION['last_move']);
-        $stmt->execute();
-        $result = $stmt->get_result()->fetch_array();
-        $_SESSION['last_move'] = $result[5];
-        setState($result[6]);
+        if (isset($_SESSION['last_move'])) {
+            $db = database();
+            $stmt = $db->prepare('SELECT * FROM moves WHERE id = '.$_SESSION['last_move']);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_array();
+            $_SESSION['last_move'] = $result[5];
+            setState($result[6]);
+        } else {
+            $_SESSION['error'] = 'Board is empty';
+        }
     }
 
+if (!debug_backtrace()) {
     undo();
     header('Location: index.php');
+}
 
