@@ -7,13 +7,13 @@
 
     function play($piece, $to, $player, $board, $hand, $errorMessage) {
         if (!$hand[$piece]) {
-            $errorMessage = "Player does not have tile";
+            $errorMessage = 'Player does not have tile';
         } elseif (isset($board[$to])) {
             $errorMessage = 'Board position is not empty';
         } elseif (count($board) && !hasNeighbour($to, $board)) {
-            $errorMessage = "Board position has no neighbour";
+            $errorMessage = 'Board position has no neighbour';
         } elseif (array_sum($hand) < 11 && !neighboursAreSameColor($player, $to, $board)) {
-            $errorMessage = "Board position has opposing neighbour";
+            $errorMessage = 'Board position has opposing neighbour';
         } elseif (array_sum($hand) <= 8 && $hand['Q']) {
             if ($piece != 'Q') {
                 $errorMessage = 'Must play queen bee';

@@ -84,9 +84,11 @@
         }
     }
 
-    function moveFrom($board) {
-        foreach (array_keys($board) as $pos) {
-            echo "<option value=\"$pos\">$pos</option>";
+    function moveFrom($board, $player) {
+        foreach ($board as $pos => $tiles) {
+            if (!empty($tiles) && $tiles[count($tiles) - 1][0] == $player) {
+                echo "<option value=\"$pos\">$pos</option>";
+            }
         }
     }
 
@@ -145,7 +147,7 @@
         </form>
         <form method="post" action="move.php">
             <select name="from">
-                <?php moveFrom($board) ?>
+                <?php moveFrom($board, $player) ?>
             </select>
             <select name="to">
                 <?php moveTo($to) ?>

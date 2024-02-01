@@ -3,7 +3,7 @@ Bugs
 1. De dropdown die aangeeft welke stenen een speler kan plaatsen bevat ook stenen die
 de speler niet meer heeft. Bovendien bevat de dropdown die aangeeft waar een speler
 stenen kan plaatsen ook velden waar dat niet mogelijk is, en bevat de dropdown die
-aangeeft vanaf welke posiGe een speler een steen wil verplaatsen ook velden die
+aangeeft vanaf welke positie een speler een steen wil verplaatsen ook velden die
 stenen van de tegenstander bevatten.
 
 2. Als wit een bijenkoningin speelt op (0, 0), en zwart op (1, 0), dan zou het een legale zet

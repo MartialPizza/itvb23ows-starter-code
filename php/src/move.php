@@ -15,40 +15,46 @@
     function move($from, $to, $player, $board, $hand) {
         if (!isset($board[$from])) {
             $_SESSION['error'] = 'Board position is empty';
-        } elseif ($board[$from][count($board[$from]) - 1][0] != $player) {
-            $_SESSION['error'] = "Tile is not owned by player";
-        } elseif ($hand['Q']) {
-            $_SESSION['error'] = "Queen bee is not played";
-        } else {
-            $tile = array_pop($board[$from]);
-            if (!hasNeighBour($to, $board) || !empty(splitHive($board))) {
-                $_SESSION['error'] = "Move would split hive";
-            } else {
-                if ($from == $to) {
-                    $_SESSION['error'] = 'Tile must move';
-                } elseif (isset($board[$to]) && $tile[1] != "B") {
-                    $_SESSION['error']  = 'Tile not empty';
-                } elseif ($tile[1] == "Q" || $tile[1] == "B") {
-                    if (!slide($board, $from, $to)) {
-                        $_SESSION['error'] = 'Tile must slide';
-                    }
-                }
-                }
-            }
-        if (isset($_SESSION['error'])) {
-            if (isset($board[$from])) {
-                array_push($board[$from], $tile);
-            } else {
-                $board[$from] = [$tile];
-            }
-        } else {
-            if (isset($board[$to])) {
-                array_push($board[$to], $tile);
-            } else {
-                $board[$to] = [$tile];
-            }
-            insertMove();
+            return;
         }
+        $lastTile = end($board[$from]);
+        if ($lastTile[0] != $player) {
+            $_SESSION['error'] = 'Tile is not owned by player';
+            return;
+        }
+        if ($hand['Q']) {
+            $_SESSION['error'] = 'Queen bee is not played';
+            return;
+        }
+        $tile = array_pop($board[$from]);
+        if (!hasNeighBour($to, $board) || !empty(splitHive($board))) {
+            $_SESSION['error'] = 'Move would split hive';
+            $board[$from][] = $tile;
+            return;
+        }
+        if ($from == $to) {
+            $_SESSION['error'] = 'Tile must move';
+            $board[$from][] = $tile;
+            return;
+        }
+        if (isset($board[$to]) && $tile[1] != 'B') {
+            $_SESSION['error'] = 'Tile not empty';
+            $board[$from][] = $tile;
+            return;
+        }
+        if ($tile[1] == 'B') {
+            if (!slide($board, $from, $to)) {
+                $_SESSION['error'] = 'Tile must slide';
+                $board[$from][] = $tile;
+                return;
+            }
+        }
+        if (isset($board[$to])) {
+            array_push($board[$to], $tile);
+        } else {
+            $board[$to] = [$tile];
+        }
+        insertMove();
         $_SESSION['board'] = $board;
     }
 
@@ -67,7 +73,7 @@
                 }
             }
         }
-        return empty($all);
+        return $all;
     }
 
     function insertMove() {
