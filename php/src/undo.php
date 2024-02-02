@@ -18,8 +18,8 @@
         }
     }
 
-if (!debug_backtrace()) {
-    undo();
-    header('Location: index.php');
-}
+    if (!debug_backtrace()) {
+        undo();
+        header('Location: index.php');
+    }
 
