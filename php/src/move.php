@@ -16,21 +16,19 @@
 
         $all = splitHive($board);
 
-        if (!isValidMoveTile($all, $tile, $from, $to, $board)) {
-            return;
-        } elseif (!isValidMovePieces($tile, $from, $to, $board)) {
+        if (!isValidMoveTile($all, $tile, $from, $to, $board) || !isValidMovePieces($tile, $from, $to, $board)) {
             return;
         }
 
         if (isset($_SESSION['error'])) {
             if (isset($board[$from])) {
-                array_push($board[$from], $tile);
+                $board[$from][] = $tile;
             } else {
                 $board[$to] = [$tile];
             }
         } else {
             if (isset($board[$to])) {
-                array_push($board[$to], $tile);
+                $board[$to][] = $tile;
             } else {
                 $board[$to] = [$tile];
             }
@@ -39,73 +37,81 @@
         $_SESSION['board'] = $board;
     }
 
-    function isValidMove($from, $to, $player, $board, $hand) {
+    function isValidMove($from, $to, $player, $board, $hand) : bool {
+        $isValid = true;
+
         if (!empty($board[$from])) {
             $lastTile = end($board[$from]);
             if ($lastTile[0] != $player) {
                 $_SESSION['error'] = 'Tile is not owned by player';
-                return false;
+                $isValid = false;
             }
         } elseif (!isset($board[$from])) {
             $_SESSION['error'] = 'Board position is empty';
-            return false;
+            $isValid = false;
         } elseif ($hand['Q']) {
             $_SESSION['error'] = 'Queen bee is not played';
-            return false;
+            $isValid = false;
         } elseif (!hasNeighBour($to, $board)) {
             $_SESSION['error'] = 'Move would split hive';
-            return false;
+            $isValid = false;
         }
-        return true;
+        return $isValid;
     }
 
-    function isValidMoveTile($all, $tile, $from, $to, $board) {
+    function isValidMoveTile($all, $tile, $from, $to, $board) : bool {
+        $isValid = true;
+
         if ($all) {
             $_SESSION['error'] = 'Move would split hive';
-            return false;
+            $isValid = false;
         } else {
             if ($from == $to) {
                 $_SESSION['error'] = 'Tile must move';
-                return false;
+                $isValid = false;
             } elseif (isset($board[$to]) && $tile[1] != 'B') {
                 $_SESSION['error'] = 'Tile is not empty';
-                return false;
+                $isValid = false;
             } elseif ($tile[1] == 'Q' || $tile[1] == 'B') {
                 if (!slide($board, $from, $to)) {
                     $_SESSION['error'] = 'Tile must slide';
-                    return false;
+                    $isValid = false;
                 }
             }
         }
-        return true;
+        return $isValid;
     }
 
-    function isValidMoveAnt($from, $to) {
+    function isValidMoveAnt($from, $to) : bool {
+        $isValid = true;
+
         if (!isNeighbour($from, $to)) {
             $_SESSION['error'] = 'Ants can only move one tile per move';
-            return false;
+            $isValid = false;
         }
-        return true;
+        return $isValid;
     }
 
-    function isValidMoveSpider($from, $to, $board) {
+    function isValidMoveSpider($from, $to, $board) : bool {
+        $isValid = true;
+
         if (!isAlongEdgeHive($to, $board)) {
             $_SESSION['error'] = 'Spider must move along the edge of the hive';
-            return false;
+            $isValid = false;
         } elseif (countSteps($from, $to) !== 3) {
             $_SESSION['error'] = 'Spider must move exactly three steps';
-            return false;
+            $isValid = false;
         }
-        return true;
+        return $isValid;
     }
 
-    function isAlongEdgeHive($to, $board) {
+    function isAlongEdgeHive($to, $board) : bool {
         $hiveEdges = getEdgesHive($board);
 
         return in_array($to, $hiveEdges);
     }
 
-    function getEdgesHive($board) {
+    function getEdgesHive($board) : array {
         $hiveEdges = [];
 
         if (!is_array($board)) {
@@ -134,64 +140,57 @@
         return max(abs($a2 - $a1), abs($b2 - $b1));
     }
 
-    function isValidMoveGrassHopper($from, $to, $board) {
-        if (jumpOverTiles($from, $to, $board)) {
-            return true;
-        } else {
-            return false;
-        }
+    function isValidMoveGrassHopper($from, $to, $board) : bool {
+        return jumpOverTiles($from, $to, $board);
     }
 
-    function jumpOverTiles($from, $to, $board) {
+    function jumpOverTiles($from, $to, $board) : bool {
+        $isValid = true;
+
         $from = explode(',', $from);
         $to = explode(',', $to);
 
         if (isset($board[implode(',', $to)])) {
             $_SESSION['error'] = 'Tile is not empty';
-            return false;
-        }
-
-        if (!hasNeighbour(implode(',', $to), $board)) {
+            $isValid = false;
+        } elseif (!hasNeighbour(implode(',', $to), $board)) {
             $_SESSION['error'] = 'Grasshopper must have neighbour';
-            return false;
+            $isValid = false;
+        } else {
+            $a = intval($to[0]) - intval($from[0]);
+            $b = intval($to[1]) - intval($from[1]);
+
+            $nextPosition = [
+                intval($to[0]) + $a,
+                intval($to[1]) + $b
+            ];
+
+            if (!isset($board[implode(',', $nextPosition)])) {
+                $_SESSION['error'] = 'Grasshopper must jump over at least one tile';
+                $isValid = false;
+            }
         }
 
-        $jumpedOverTile = false;
-
-        $a = intval($to[0]) - intval($from[0]);
-        $b = intval($to[1]) - intval($from[1]);
-
-        $nextPosition = [
-            intval($to[0]) + $a,
-            intval($to[1]) + $b
-        ];
-
-        if (isset($board[implode(',', $nextPosition)])) {
-            $jumpedOverTile = true;
-        }
-        if (!$jumpedOverTile) {
-            $_SESSION['error'] = 'Grasshopper must jump over at least one tile';
-            return false;
-        }
-
-        return true;
+        return $isValid;
     }
 
-    function isValidMovePieces($tile, $from, $to, $board) {
+    function isValidMovePieces($tile, $from, $to, $board) : bool {
+        $isValid = true;
+
         if ($tile[1] == 'A') {
             if (!isValidMoveAnt($from, $to)) {
-                return false;
+                $isValid = false;
             }
         } elseif ($tile[1] == 'S') {
             if (!isValidMoveSpider($from, $to, $board)) {
-                return false;
+                $isValid = false;
             }
         } elseif ($tile[1] == 'G') {
             if (!isValidMoveGrassHopper($from, $to, $board)) {
-                return false;
+                $isValid = false;
             }
         }
-        return true;
+        return $isValid;
     }
 
     function splitHive($board) {
@@ -202,8 +201,8 @@
             $next = explode(',', array_shift($queue));
             foreach ($GLOBALS['OFFSETS'] as $pq) {
                 list($p, $q) = $pq;
-                $p += $next[0];
-                $q += $next[1];
+                $p .= $next[0];
+                $q .= $next[1];
                 if (in_array("$p,$q", $all)) {
                     $queue[] = "$p,$q";
                     $all = array_diff($all, ["$p,$q"]);

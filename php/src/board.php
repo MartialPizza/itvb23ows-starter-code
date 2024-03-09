@@ -45,8 +45,6 @@
         }
         foreach (array_filter($board) as $pos => $tile) {
             $pq = explode(',', $pos);
-            $pq[0];
-            $pq[1];
             $h = count($tile);
             echo '<div class="tile player';
             echo $tile[$h-1][0];

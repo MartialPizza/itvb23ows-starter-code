@@ -11,7 +11,7 @@
     $dotenv->load();
 
     if (!function_exists('getState')) {
-        function getState() {
+        function getState() : string {
             return serialize([$_SESSION['hand'], $_SESSION['board'], $_SESSION['player']]);
         }
     }
@@ -26,7 +26,7 @@
     }
 
     if (!function_exists('database')) {
-        function database() {
+        function database() : mysqli {
             return new mysqli($_ENV['DB_HOSTNAME'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
         }
     }
