@@ -12,12 +12,13 @@
         return false;
     }
 
-    function hasNeighBour($a, $board) {
+    function hasNeighBour($a, $board) : bool {
         foreach (array_keys($board) as $b) {
             if (isNeighbour($a, $b)) {
                 return true;
             }
         }
+        return false;
     }
 
     function neighboursAreSameColor($player, $a, $board) : bool {
