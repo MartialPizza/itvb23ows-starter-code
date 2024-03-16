@@ -10,6 +10,7 @@ pipeline {
 
         stage('Run PHPUnit') {
             steps {
+                sh 'chmod +x vendor/bin/phpunit'
                 sh 'vendor/bin/phpunit'
             }
         }
