@@ -10,7 +10,7 @@ pipeline {
 
         stage('Run PHPUnit') {
             steps {
-                sh 'php vendor/bin/phpunit'
+                sh 'vendor/bin/phpunit'
             }
         }
 
