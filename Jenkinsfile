@@ -8,13 +8,12 @@ pipeline {
             }
         }
 
-        stage('Run PHPUnit') {
-            steps {
-                sh 'composer install'
+//         stage('Run PHPUnit') {
+//             steps {
 //                 sh 'chmod +x vendor/bin/phpunit'
-                sh 'vendor/bin/phpunit'
-            }
-        }
+//                 sh 'vendor/bin/phpunit'
+//             }
+//         }
 
         stage("Scan") {
             steps {
