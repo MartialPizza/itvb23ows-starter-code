@@ -160,4 +160,25 @@ class MoveTest extends TestCase {
         $this->assertEquals('Tile is not empty', $_SESSION['error']);
     }
 
+    public function testSplitHive() {
+        $board = [
+            '0, 1' => ['Q', '0'],
+            '0, 2' => ['A', '1'],
+            '0, 0' => ['A', '0'],
+            '0, -1' => ['S', '1'],
+            '1, 1' => ['S', '0'],
+        ];
+
+        $expectedResult = array(
+            0 => '0, 2',
+            1 => '0, 0',
+            2 => '0, -1',
+            3 => '1, 1',
+        );
+
+        $result = splitHive($board);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
 }

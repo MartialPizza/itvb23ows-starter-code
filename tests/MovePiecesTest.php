@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../php/src/move.php';
 
-class MoveTwoTest extends TestCase {
+class MovePiecesTest extends TestCase {
 
     public function testIsValidMoveAnt() {
         $from = '0, 0';
@@ -296,27 +296,6 @@ class MoveTwoTest extends TestCase {
         $result = isValidMovePieces($tile, $from, $to, $board);
 
         $this->assertFalse($result);
-    }
-
-    public function testSplitHive() {
-        $board = [
-            '0, 1' => ['Q', '0'],
-            '0, 2' => ['A', '1'],
-            '0, 0' => ['A', '0'],
-            '0, -1' => ['S', '1'],
-            '1, 1' => ['S', '0'],
-        ];
-
-        $expectedResult = array(
-            0 => '0, 2',
-            1 => '0, 0',
-            2 => '0, -1',
-            3 => '1, 1',
-        );
-
-        $result = splitHive($board);
-
-        $this->assertEquals($expectedResult, $result);
     }
 
 }

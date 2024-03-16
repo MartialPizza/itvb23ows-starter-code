@@ -33,7 +33,7 @@ class UtilTest extends TestCase {
             '0, -1' => ['S', '1'],
             '1, 1' => ['S', '0'],
         ];
-        $this->assertEquals(true, hasNeighBour($pos1, $board));;
+        $this->assertEquals(true, hasNeighBour($pos1, $board));
     }
 
     public function testHasNoNeighbour() {
