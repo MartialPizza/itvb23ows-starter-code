@@ -9,9 +9,14 @@ pipeline {
         }
 
         stage('Run PHPUnit') {
+            agent {
+                docker {
+                    image 'composer:lts'
+                }
+            }
             steps {
-                sh 'chmod +x vendor/bin/phpunit'
-                sh 'vendor/bin/phpunit'
+                sh 'composer install'
+                sh 'vendor/bin/phpunit ./'
             }
         }
 
