@@ -8,12 +8,12 @@ pipeline {
             }
         }
 
-//         stage('Run PHPUnit') {
-//             steps {
-//                 sh 'chmod +x vendor/bin/phpunit'
-//                 sh 'vendor/bin/phpunit'
-//             }
-//         }
+        stage('Run PHPUnit') {
+            steps {
+                sh 'chmod +x vendor/bin/phpunit'
+                sh 'vendor/bin/phpunit'
+            }
+        }
 
         stage("Scan") {
             steps {
