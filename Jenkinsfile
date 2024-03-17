@@ -4,15 +4,11 @@ pipeline {
     }
 
     stages {
-        stage("Test") {
-            steps {
-                echo 'testing the application...'
-            }
-        }
 
         stage('Run PHPUnit') {
             agent {
                 docker {
+                    label 'docker'
                     image 'composer:lts'
                 }
             }
