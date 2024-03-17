@@ -1,14 +1,11 @@
 pipeline {
-    agent {
-        label 'docker'
-    }
+    agent any
 
     stages {
 
         stage('Run PHPUnit') {
             agent {
                 docker {
-                    label 'docker'
                     image 'composer:lts'
                 }
             }
