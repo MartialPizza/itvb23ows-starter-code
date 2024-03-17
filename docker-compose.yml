@@ -12,10 +12,12 @@ services:
       dockerfile: Dockerfile
     environment:
       - MYSQL_DBPORT=3306
+      - AI_API_HOST=ai:5000
     ports:
       - 8080:3000
     depends_on:
       - mysql
+      - ai
 
   mysql:
     image: mysql:8.0.0
@@ -27,3 +29,8 @@ services:
     restart: always
     ports:
       - 3307:3306
+
+  ai:
+    build: ./ai
+    ports:
+      - '5000:5000'
