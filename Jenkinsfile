@@ -5,7 +5,7 @@ pipeline {
 
         stage("Composer install") {
             steps {
-                sh 'C:\xampp\htdocs\itvb23ows-starter-code\composer update'
+                sh 'composer update'
             }
         }
 
