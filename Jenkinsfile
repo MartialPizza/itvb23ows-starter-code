@@ -3,16 +3,12 @@ pipeline {
 
     stages {
 
-        stage('Run PHPUnit') {
-            agent {
-                docker {
-                    image 'composer:lts'
-                }
-            }
-            steps {
-                sh 'composer install'
-                sh 'vendor/bin/phpunit ./'
-            }
+        stage("Composer install") {
+            sh 'composer update'
+        }
+
+        stage("Run PHPUnit") {
+            sh 'vendor/bin/phpunit'
         }
 
         stage("Scan") {
