@@ -4,11 +4,15 @@ pipeline {
     stages {
 
         stage("Composer install") {
-            sh 'composer update'
+            steps {
+                sh 'composer update'
+            }
         }
 
         stage("Run PHPUnit") {
-            sh 'vendor/bin/phpunit'
+            steps {
+                sh 'vendor/bin/phpunit'
+            }
         }
 
         stage("Scan") {
