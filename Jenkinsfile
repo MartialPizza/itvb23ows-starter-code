@@ -3,14 +3,9 @@ pipeline {
 
     stages {
 
-        stage("Composer install") {
-            steps {
-                sh 'composer update'
-            }
-        }
-
         stage("Run PHPUnit") {
             steps {
+                sh 'chmod +x vendor/bin/phpunit'
                 sh 'vendor/bin/phpunit'
             }
         }
