@@ -44,19 +44,4 @@ class MoveAntTest extends TestCase {
         $this->assertEquals('Board position is not empty', $_SESSION['error']);
     }
 
-//    public function testIsUnvalidMoveNotAdjacentTilesAnt() {
-//        $from = '0, 0';
-//        $to = '0, 3';
-//        $board = [
-//            '0, 0' => ['A', '0'],
-//            '0, 1' => ['Q', '1'],
-//        ];
-//
-//        isValidMoveAnt($from, $to, $board);
-//
-//        var_dump($_SESSION['error']);
-//
-//        $this->assertEquals('Ants can only move to adjacent tiles', $_SESSION['error']);
-//    }
-
 }

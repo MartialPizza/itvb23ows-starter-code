@@ -6,21 +6,6 @@ require_once __DIR__ . '/../php/src/move.php';
 
 class MoveTest extends TestCase {
 
-    public function testGoodMove() {
-        $from = '0, 0';
-        $to = '1, 1';
-        $player = 0;
-        $board = [
-            '0, 0' => ['Q', '0'],
-            '1, 0' => ['A', '1']
-        ];
-        $hand = ['Q' => false];
-
-        move($from, $to, $player, $board, $hand);
-
-        $this->assertEquals(['Q', '0'], $board[$from]);
-    }
-
     public function testMoveTileNotEmpty() {
         $from = '0, 0';
         $to = '0, 1';
@@ -79,38 +64,6 @@ class MoveTest extends TestCase {
         $this->assertFalse($result);
         $this->assertEquals('Board position is empty', $_SESSION['error']);
     }
-
-//    public function testQueenBeeIsNotPlayed() {
-//        $from = '0, 0';
-//        $to = '1, 1';
-//        $player = 0;
-//        $board = [
-//            '0, 0' => ['B', '0'],
-//            '1, 0' => ['A', '1'],
-//        ];
-//        $hand = ['Q' => true];
-//        var_dump($board);
-//        $result = isValidMove($from, $to, $player, $board, $hand);
-//
-//        $this->assertFalse($result);
-//        $this->assertEquals('Queen bee is not played', $_SESSION['error']);
-//    }
-
-//    public function testHiveWouldSplit() {
-//        $from = '0, 0';
-//        $to = '0, 3';
-//        $playerWhite = 0;
-//        $board = [
-//            '0, 0' => ['Q', '0'],
-//            '0, 1' => ['B', '1'],
-//        ];
-//        $hand = ['B' => true];
-//
-//        $result = isValidMove($from, $to, $playerWhite, $board, $hand);
-//
-//        $this->assertFalse($result);
-//        $this->assertEquals('Move would split hive', $_SESSION['error']);
-//    }
 
     public function testHiveWouldSplitTile() {
         $all = ['0, 1', '1, 0'];

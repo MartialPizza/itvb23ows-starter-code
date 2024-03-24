@@ -88,21 +88,6 @@ class UtilTest extends TestCase {
         $this->assertEquals(3, len($input));
     }
 
-//    public function testValidSlideMove() {
-//        $from = '0, -1';
-//        $to = '1, 0';
-//        $board = [
-//            '0, 0' => ['B', '0'],
-//            '0, 1' => ['A', '1'],
-//            '0, -1' => ['S', '0'],
-//            '0, 2' => ['A', '1'],
-//        ];
-//
-//        $result = slide($board, $from, $to);
-//
-//        $this->assertTrue($result);
-//    }
-
     public function testInvalidSlideMove() {
         $from = '0, 0';
         $to = '0, 1';

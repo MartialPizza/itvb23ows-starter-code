@@ -34,7 +34,7 @@ class MoveSpiderTest extends TestCase {
         $this->assertEquals('Spider must move', $_SESSION['error']);
     }
 
-    public function testIsUnvalidMoveSpiderNotAlongEdgeHive() {
+    public function testIsUnvalidMoveNotAlongEdgeHiveSpider() {
         $from = '0, 0';
         $to = '2, 2';
         $board = [
@@ -49,7 +49,7 @@ class MoveSpiderTest extends TestCase {
         $this->assertEquals('Spider must move along the edge of the hive', $_SESSION['error']);
     }
 
-    public function testIsUnvalidMoveSpiderMustMoveThreeSteps() {
+    public function testIsUnvalidMoveMustMoveThreeStepsSpider() {
         $from = '0, 0';
         $to = '0, 2';
         $board = [
