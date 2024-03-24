@@ -10,7 +10,3 @@ EXPOSE 5000
 WORKDIR /ai/itvb23ows-hive-ai
 
 CMD [ "flask", "--app", "app", "run", "--host", "0.0.0.0", "--debug" ]
-
-
-
-

@@ -12,7 +12,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - MYSQL_DBPORT=3306
-      - AI_API_HOST=ai:5000
+      - AI_API_HOST=http://ai:5000
     ports:
       - 8080:3000
     depends_on:
