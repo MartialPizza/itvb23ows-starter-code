@@ -1,5 +1,6 @@
 <?php
     include_once 'board.php';
+    include_once 'util.php';
 
     $board = $_SESSION['board'];
     $player = $_SESSION['player'];
@@ -7,7 +8,10 @@
 
     $to = [];
     $to = possibleMoveTo($board, $to);
+
+    $winner = isWinner($board);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -15,6 +19,7 @@
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
+        <?php if ($winner != '') { echo $winner; } ?>
         <div class="board">
             <?php board($board);?>
         </div>
