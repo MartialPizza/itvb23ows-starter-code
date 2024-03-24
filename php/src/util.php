@@ -60,6 +60,7 @@
 
     function isWinner($board): string {
         $message = '';
+        $messageWinner = 'The winner is player ';
         $queens = findQueens($board);
 
         if (!empty($queens)) {
@@ -69,36 +70,40 @@
                 list($x1, $y1) = explode(', ', $queens[0]);
                 list($x2, $y2) = explode(', ', $queens[1]);
 
-                $adjacentPositions1 = getAdjacentPositions($x1, $y1);
-                $adjacentPositions2 = getAdjacentPositions($x2, $y2);
+                $queen1 = isQueenSurrounded($x1, $y1, $board);
+                $queen2 = isQueenSurrounded($x2, $y2, $board);
 
-                $isAllInBoard1 = arePositionsInBoard($board, $adjacentPositions1);
-                $isAllInBoard2 = arePositionsInBoard($board, $adjacentPositions2);
-
-                if ($isAllInBoard1 && $isAllInBoard2) {
+                if ($queen1 && $queen2) {
                     $message = "It's a tie";
-                } elseif ($isAllInBoard1) {
-                    $player1 = $board["$x1, $y1"][1];
-                    $winner1 = ($player1 === '0') ? '1' : '0';
-                    $message = 'The winner is player ' . $winner1;
-                } elseif ($isAllInBoard2) {
-                    $player2 = $board["$x2, $y2"][1];
-                    $winner2 = ($player2 === '0') ? '1' : '0';
-                    $message = 'The winner is player ' . $winner2;
+                } elseif ($queen1) {
+                    $winner1 = getWinner($x1, $y1, $board);
+                    $message = $messageWinner . $winner1;
+                } elseif ($queen2) {
+                    $winner2 = getWinner($x2, $y2, $board);
+                    $message = $messageWinner . $winner2;
                 }
             } elseif ($queenCount === 1) {
                 list($x, $y) = explode(', ', $queens[0]);
-                $adjacentPositions = getAdjacentPositions($x, $y);
 
-                $isAllInBoard = arePositionsInBoard($board, $adjacentPositions);
-                if ($isAllInBoard) {
-                    $player = $board["$x, $y"][1];
-                    $winner = ($player === '0') ? '1' : '0';
-                    $message = 'The winner is player ' . $winner;
+                $queen = isQueenSurrounded($x, $y, $board);
+
+                if ($queen) {
+                    $winner = getWinner($x, $y, $board);
+                    $message = $messageWinner . $winner;
                 }
             }
         }
         return $message;
+    }
+
+    function isQueenSurrounded($x, $y, $board): bool {
+        $adjacentPositions = getAdjacentPositions($x, $y);
+        return arePositionsInBoard($board, $adjacentPositions);
+    }
+
+    function getWinner($x, $y, $board): string {
+        $player = $board["$x, $y"][1];
+        return ($player === '0') ? '1' : '0';
     }
 
     function arePositionsInBoard($board, $positions): bool {
